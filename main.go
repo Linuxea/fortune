@@ -50,6 +50,11 @@ func workout() {
 
 	now := time.Now()
 
+	// 太早了不通知
+	if now.Hour() < 15 {
+		return
+	}
+
 	if now.Hour() == 18 && now.Minute() == 30 {
 		tip := "辛苦啦！下班时间已经到了。请整理好桌上东西并记得打卡"
 		_, _ = http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext(tip))))
@@ -72,6 +77,13 @@ func workout() {
 	_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext(cont))))
 	if httpErr != nil {
 		fmt.Println("http 异常", httpErr.Error())
+	}
+
+	if now.Minute() == 30 {
+		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("起来走走吧，命是自己的 钱是公司的"))))
+		if httpErr != nil {
+			fmt.Println("http 异常", httpErr.Error())
+		}
 	}
 
 }
@@ -189,8 +201,6 @@ func luxun() string {
 其实地上本没有路，走的人多了，也便成了路。
 
 寄意寒星荃不察，我以我血荐轩辕。
-
-鲁迅的著名句子
 
 度尽劫波兄弟在，相逢一笑泯恩仇。(鲁迅题三义塔)
 
