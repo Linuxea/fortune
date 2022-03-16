@@ -50,11 +50,12 @@ func workout() {
 
 	now := time.Now()
 
-	// 太早了不通知
+	// 0.太早了不通知
 	if now.Hour() < 15 {
 		return
 	}
 
+	// 1.下班提醒
 	if now.Hour() == 18 && now.Minute() == 30 {
 		tip := "辛苦啦！下班时间已经到了。请整理好桌上东西并记得打卡"
 		_, _ = http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext(tip))))
@@ -77,14 +78,24 @@ func workout() {
 		return
 	}
 
+	// 2.下班时长提醒
 	cont := fmt.Sprintf("距离下班时间还有: %02d:%02d:%02d, \n\n%s\n\n%s", hours, minutes, seconds, strings.TrimSpace(luxun()), fortune())
 	_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext(cont))))
 	if httpErr != nil {
 		fmt.Println("http 异常", httpErr.Error())
 	}
 
+	// 3.狗命提醒
 	if now.Minute() == 30 {
 		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("起来走走吧，命是自己的 钱是公司的"))))
+		if httpErr != nil {
+			fmt.Println("http 异常", httpErr.Error())
+		}
+	}
+
+	// 4.瑞幸提醒
+	if w == time.Wednesday && now.Minute() == 30 && now.Hour() == 15 {
+		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("来杯瑞幸？yyds"))))
 		if httpErr != nil {
 			fmt.Println("http 异常", httpErr.Error())
 		}
