@@ -94,8 +94,8 @@ func workout() {
 	}
 
 	// 4.瑞幸提醒
-	if w == time.Wednesday && now.Minute() == 30 && now.Hour() == 15 {
-		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("来杯瑞幸？yyds"))))
+	if (w == time.Wednesday || w == time.Monday) && now.Minute() == 30 && now.Hour() == 15 {
+		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("来杯瑞幸？能饮一杯无。yyds? "))))
 		if httpErr != nil {
 			fmt.Println("http 异常", httpErr.Error())
 		}
