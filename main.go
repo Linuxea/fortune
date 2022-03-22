@@ -101,6 +101,14 @@ func workout() {
 		}
 	}
 
+	// 5.一半时间过去提醒
+	if now.Hour() == 15 {
+		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("一半时间过去了！加油盆友们"))))
+		if httpErr != nil {
+			fmt.Println("http 异常", httpErr.Error())
+		}
+	}
+
 }
 
 func buildContext(tip string) string {
