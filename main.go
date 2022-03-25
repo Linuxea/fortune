@@ -39,7 +39,7 @@ func fortune() string {
 func workout() {
 
 	// notifyUrl := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=4a7bbc6e-f269-480a-b14f-a74f25a8a936&debug=1"
-	notifyUrl := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc08143e-1602-438f-9ba8-b393c99b0493"
+	notifyUrl := "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=4a7bbc6e-f269-480a-b14f-a74f25a8a936"
 
 	// 周末不上班
 	w := time.Now().Local().Weekday()
