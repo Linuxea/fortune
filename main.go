@@ -51,9 +51,9 @@ func workout() {
 	now := time.Now()
 
 	// 0.太早了不通知
-	if now.Hour() < 15 {
-		return
-	}
+	// if now.Hour() < 15 {
+	// 	return
+	// }
 
 	// 1.下班提醒
 	if now.Hour() == 18 && now.Minute() == 30 {
