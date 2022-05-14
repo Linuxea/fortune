@@ -109,6 +109,14 @@ func workout() {
 		}
 	}
 
+	// 6.周报提醒
+	if (w == time.Friday) && now.Minute() == 30 && now.Hour() == 17 {
+		_, httpErr := http.Post(notifyUrl, "application/json", bytes.NewBuffer([]byte(buildContext("这周快结束了～记得整理周报哦"))))
+		if httpErr != nil {
+			fmt.Println("http 异常", httpErr.Error())
+		}
+	}
+
 }
 
 func buildContext(tip string) string {
